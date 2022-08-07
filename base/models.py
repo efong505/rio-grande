@@ -105,7 +105,7 @@ class Tag(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     #id = models.UUIDField(default=uuid.uuid4, unique=True,
      #                     primary_key=True, editable=False)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, unique=True)
                           
 
     def __str__(self):
