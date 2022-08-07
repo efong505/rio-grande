@@ -103,9 +103,9 @@ class About(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
-    #id = models.UUIDField(default=uuid.uuid4, unique=True,
-     #                     primary_key=True, editable=False)
-    id = models.UUIDField(primary_key=True,default=uuid.uuid4, unique=True)
+    id = models.CharField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
+    #id = models.UUIDField(primary_key=True,default=uuid.uuid4, unique=True)
                           
 
     def __str__(self):
