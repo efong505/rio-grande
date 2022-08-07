@@ -1,6 +1,5 @@
 from distutils.text_file import TextFile
 from statistics import mode
-from tkinter import CASCADE
 from unicodedata import category
 import uuid
 from django.db import models
