@@ -1,0 +1,28 @@
+.minionbold {
+    font-family: minion-pro,serif;
+    
+}
+
+
+.GrotesqueLight {
+    font-family: brandon-grotesque,sans-serif;
+    
+    
+}
+
+input .inputWidth {
+    width: 3000px;
+    color: red;
+}
+.ul_bullet_none {
+    list-style-type: none;
+    
+}
+
+
+.up {
+    padding-bottom: 2em;
+}
+.down {
+    padding-top: 2ems;
+}

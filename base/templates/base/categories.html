@@ -1,0 +1,11 @@
+<ul>
+    {% for cat in categories %}
+    <li><a href="{% url 'category' cat.slug  %}" title="">{{ cat.title }}</a> ({{ cat.posts_count }})</li>
+    {% comment %} <li><a href="#0" title="">Wordpress</a> (2)</li>
+                        <li><a href="#0" title="">Ghost</a> (14)</li>
+                        <li><a href="#0" title="">Joomla</a> (5)</li>
+                        <li><a href="#0" title="">Drupal</a> (3)</li>
+                        <li><a href="#0" title="">Magento</a> (2)</li>
+                        <li><a href="#0" title="">Uncategorized</a> (9)</li> {% endcomment %}
+    {% endfor %}
+</ul>

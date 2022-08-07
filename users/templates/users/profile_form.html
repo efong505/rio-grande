@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="mt-5 container">
+<h1>Edit Account</h1>
+    <form method="POST" action={% url 'edit-account' %} enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        {{ form | crispy }}
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+{% endblock %}

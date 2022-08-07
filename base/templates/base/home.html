@@ -1,0 +1,40 @@
+{% extends 'main.html' %} 
+{% load static %}
+{% block content %}
+<!-- MID IMAGES -->
+<div class="container bg-warning bg-opacity-25">
+    <div class="row">
+    <div class="col-md-4 p-0 m-0">
+        <img src="{% static 'images/bench.jpg' %}"  class="img-fluid" alt="bench">
+    </div>
+    <div class="col-md-4 p-0 m-0">
+        <img src="{% static 'images/sarape chest.jpg' %}" class="img-fluid" alt="Sarape">
+    </div>
+    <div class="col-md-4 my-auto">
+            
+            <div class="text-center GrotesqueLight">
+                <h2>Latest Blog Posts:</h3>
+                {% for post in posts %}
+                <ul class="ul_bullet_none">
+                    
+                    <li><a href="{% url 'post' post.slug  %}" style="color: #44ceb9">{{ post.title }}</a></li>
+                    
+                </ul>
+                {% endfor %}
+            </div>
+    </div>
+    </div>
+</div>    
+
+
+
+{% include 'base/signup.html' %}
+
+<!-- MID IMAGES END -->
+
+{% comment %} Home Template
+{% for room in rooms %}
+{{ room.id }} -- {{ room.name }} {% endcomment %}
+{% comment %} {% endfor %} {% endcomment %}
+
+{% endblock content %}

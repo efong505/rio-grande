@@ -1,0 +1,29 @@
+{% extends 'main.html' %} 
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        {% for about in title %}
+
+        <div class="col-4">     
+            {% comment %} <img style="max-width: 500px" src="{{ about.image.url }}" class="rounded float-start" alt="..."> {% endcomment %}
+            <div class="card text-center" style="width: 24rem;">
+                <img src="{{ about.image.url }}" class="card-img-top" alt="Julia">
+                <div class="card-body">
+                  <p class="card-text">Julia.</p>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+        <h1>{{ about.title }}</h1>
+        <p>
+            {{ about.story | safe }}
+        </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% include 'base/signup.html' %}
+{% comment %} {% include 'base/posts.html' %} {% endcomment %}
+{% endblock content %}

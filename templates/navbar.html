@@ -1,0 +1,87 @@
+{% load static %}
+{% url 'create-post' as create_post %}
+{% url 'posts-list' as modify_posts %}
+{% url 'home' as home_url %} <!-- set home_url -->
+{% url 'blog' as blog_url %}
+{% url 'about' as about_url %}
+{% url 'login' as login_url %}
+
+<div class="mt-2 container">
+    <div class="row pl-0">
+        <div class="col-8">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="" width="40" height="29" class="d-inline-block align-text-top">        
+            </a> <strong class="minionbold">RIO GRANDE ART & GRAPHICS, ETC...</strong>   
+        </div>
+        <!-- TOP RIGHT NAVIGATION -->
+        <div class="col-4">
+            <nav class="navbar  navbar-expand-lg navbar-light">
+                <div class="container">   
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-items">
+                        <a class="nav-link {% if request.path == url %}active{% endif %}" aria-current="page" href="#">WATCH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link {% if request.path == url %}active{% endif %}" href="#">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </li>
+                        {% if user.is_superuser %}
+                        {% comment %} <li class="nav-item">
+                        <a class="nav-link {% if request.path == create_post %}active{% endif %}" href="{% url 'create-post' %}">CREATE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </li> {% endcomment %}
+                        <li class="nav-item">
+                        <a class="nav-link {% if request.path == modify_posts %}active{% endif %}" href="{% url 'account' %}">ACCOUNT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </li>
+                        {% endif %}
+
+
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                        <a style="{% if request.path == home_url %}width: 8em;{% elif request.path == about_url %}width: 8em;{% elif request.path == login_url %}width: 8em;{% else %}width: auto;{% endif %}" class="btn btn-outline-dark btn-lrg" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a style="{% if request.path == home_url %}width: 8em;{% elif request.path == about_url %}width: 8em;{% elif request.path == login_url %}width: 8em;{% else %}width: auto;{% endif %}" class="btn btn-outline-dark btn-lrg" href="{% url 'login' %}">Login/Sign Up</a>
+                        </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>        
+            </nav>
+        </div>
+        <!-- END TOP RIGHT NAV -->
+    </div>      
+</div>    
+<!-- NAVIGATION -->
+
+
+
+<nav class="navbar  navbar-expand-lg navbar-light" style="background-color: #e9e5d5;">
+    <div class="container  GrotesqueLight">   
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-items">
+            <a class="nav-link {% if request.path == home_url %} active{% endif %}" aria-current="page" href="{% url 'home' %}">HOME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link {% if request.path == url %} active{% endif %}" href="#">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </li>
+            
+            <li class="nav-item">
+            <a class="nav-link {% if request.path == url  %} active{% endif %}" href="#">GALLERY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == blog_url %} active{% endif %}" href="{% url 'blog' %}">BLOG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == about_url %}active{% endif %}"  href="{% url 'about' %}">ABOUT</a>
+            </li>
+        </ul>
+        {% if request.user.is_authenticated %}
+        Hello {{ request.user }}!
+        {% endif %}
+        </div>
+    </div>        
+</nav> <!-- END NAVIGATION -->

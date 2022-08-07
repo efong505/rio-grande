@@ -1,0 +1,488 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'blog/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+
+    <!-- script
+    ================================================== -->
+    <script src="{% static 'blog/js/modernizr.js' %}"></script>
+    <script defer src="{% static 'blog/js/fontawesome/all.min.js' %}"></script>
+
+<body id="top" class="ss-single">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- Header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="row_other">
+
+            <div class="s-header__content column">
+                <h1 class="s-header__logotext">
+                    <a href="{% url 'blog'   %}" title="">Julia Talk.</a>
+                </h1>
+                <p class="s-header__tagline">Let's about it.</p>
+            </div>
+
+        </div> <!-- end row -->
+
+      
+    </header> <!-- Header End -->
+
+
+
+    <!-- Content
+    ================================================== -->
+    <div class="s-content">
+        <div class="row_other">
+            <div id="main" class="s-content__main large-8 column">
+                <article class="entry">
+                    <header class="entry__header">
+                        <h2 class="entry__title h1">
+                            <a href="" title="">{% block title %} {{ post.title }} {% endblock title %}</a>
+                        </h2>
+                        <div class="entry__meta">
+                            <ul>
+                                <li>{{ post.created_on }}</li>
+                                
+                                {% comment %} <li><a href="{% url 'category' post.category.slug %}">{{ post.category.title }}</a></li> {% endcomment %}
+                                {% comment %} <li>{{ post.category.title }}</li> {% endcomment %}
+                                <li><a href="{% url 'category' post.category.slug %}" title="" rel="category tag">{{ post.category.title }}</a></li>
+                                <li>{{ post.author }}</li>
+                            </ul>
+                        </div>
+                     
+                    </header> <!-- entry__header -->
+
+                    <div class="entry__content-media">
+                        {% comment %} <img src="{{ post.image.url }}" 
+                             srcset="images/wheel-1000.jpg 1000w, 
+                                     images/wheel-500.jpg 500w" 
+                             sizes="(max-width: 1000px) 100vw, 1000px" alt=""> {% endcomment %}
+                             <img style="max-width: 500px" src="{{ post.image.url }}">
+                    </div>
+                    
+                    <div class="entry__content">
+                        {% if post.intro %}
+                        <p class="lead">
+                            
+                            {% comment %} {{ post.content | safe| slice:":180" }} <!--Needs to start at 3rd index. For some reason if you 
+                                                                            don't it will not format correctly 
+                                                                            and the text will not follow the lead formatting-->
+                             {% endcomment %}
+                            {{ post.intro | safe }}
+                        </p>
+                        {% endif %}
+                        <p>
+                            <!--{{ post.content | safe | slice:"180:" }} -->
+                            {{ post.content | safe }}
+                        </p>
+
+                        
+                    </div> <!-- entry__content -->
+
+                    <p class="entry__tags">
+                        <span>Tagged in </span>:
+                        <a href="#0">orci</a>, <a href="#0">lectus</a>, <a href="#0">varius</a>, <a href="#0">turpis</a>
+                    </p>
+                    
+                    <!-- Previous and Next Article section-->
+                    <ul class="entry__post-nav h-group">
+                        {% if prev.slug %}
+                        <li class="prev"><a rel="prev" href="{% url 'post' prev.slug %}"><strong class="h6">Previous Article</strong>{{ prev.title }}</a></li>
+                        {% endif %}
+                        {% if next.slug %}
+                        <li class="next"><a rel="next" href="{% url 'post' next.slug %} "><strong class="h6">Next Article</strong> {{ next.title }}</a></li>
+                        {% endif %}
+                    </ul>
+
+                </article> <!-- end entry -->
+
+                <div class="comments-wrap">
+
+                    <div id="comments">
+
+                        <h3>{{ comments.count }} Comment{{ comments.count | pluralize:"s"}}</h3>
+                        
+                        <!-- START commentlist -->
+                        
+                        <ol class="commentlist">
+                        {% for comment in comments %}
+                            <li class="depth-1 comment">
+                                <div class="comment__avatar">
+                                    <img class="avatar" src="images/avatars/user-01.jpg" alt="" width="50" height="50">
+                                </div>
+                                <div class="comment__content">
+                                    <div class="comment__info">
+                                        <div class="comment__author">{{ comment.name }}</div>
+                                        <div class="comment__meta">
+                                            <div class="comment__time">{{ comment.created_on }}</div>
+                                            {% comment %} <div class="comment__reply">
+                                                <a class="comment-reply-link" href="#0">Reply</a>
+                                            </div> {% endcomment %}
+                                        </div>
+                                    </div>
+        
+                                    <div class="comment__text">
+                                    <p>{{ comment.body | linebreaks }}</p>
+                                    </div>
+                                </div>
+                            </li> <!-- end comment level 1 -->
+                          
+                            {% endfor %}
+
+                            {% comment %} <!-- Beginning comment-respond -->
+                            <div class="comment-respond">
+
+                                <!-- START respond -->
+                                <div id="respond">
+                                    {% if new_comment %}
+                                    <div class="alert alert-success" role="alert">
+                                        Your comment is awaiting moderation
+                                    </div>
+        
+                                    {% else %}
+                                    <h3>Add Comment <span>Your email address will not be published</span></h3>
+                    
+                                    <form name="contactForm" id="contactForm" method="post" action="" autocomplete="off">
+                                        {{ comment_form.as_p }}
+                                        {% csrf_token %}
+                                        <fieldset>        
+                                            <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large h-full-width" value="Add Comment" type="submit">
+                                        </fieldset> 
+                                    </form> <!-- end form -->
+                                    {% endif %}
+                                </div>
+                                <!-- END respond-->
+                    
+                            </div> <!-- end comment-respond --> {% endcomment %}
+{% comment %} 
+                            <li class="thread-alt depth-1 comment">
+        
+                                <div class="comment__avatar">
+                                    <img class="avatar" src="images/avatars/user-04.jpg" alt="" width="50" height="50">
+                                </div>
+        
+                                <div class="comment__content">
+        
+                                    <div class="comment__info">
+                                        <div class="comment__author">John Doe</div>
+        
+                                        <div class="comment__meta">
+                                            <div class="comment__time">July 12, 2019</div>
+                                            <div class="comment__reply">
+                                                <a class="comment-reply-link" href="#0">Reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="comment__text">
+                                    <p>Sumo euismod dissentiunt ne sit, ad eos iudico qualisque adversarium, tota falli et mei. Esse euismod
+                                    urbanitas ut sed, et duo scaevola pericula splendide. Primis veritus contentiones nec ad, nec et
+                                    tantas semper delicatissimi.</p>
+                                    </div>
+        
+                                </div>
+        
+                                <ul class="children">
+        
+                                    <li class="depth-2 comment">
+        
+                                        <div class="comment__avatar">
+                                            <img class="avatar" src="images/avatars/user-03.jpg" alt="" width="50" height="50">
+                                        </div>
+        
+                                        <div class="comment__content">
+        
+                                            <div class="comment__info">
+                                                <div class="comment__author">Kakashi Hatake</div>
+        
+                                                <div class="comment__meta">
+                                                    <div class="comment__time">July 12, 2019</div>
+                                                    <div class="comment__reply">
+                                                        <a class="comment-reply-link" href="#0">Reply</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="comment__text">
+                                                <p>Duis sed odio sit amet nibh vulputate
+                                                cursus a sit amet mauris. Morbi accumsan ipsum velit. Duis sed odio sit amet nibh vulputate
+                                                cursus a sit amet mauris</p>
+                                            </div>
+        
+                                        </div>
+        
+                                        <ul class="children">
+        
+                                            <li class="depth-3 comment">
+        
+                                                <div class="comment__avatar">
+                                                    <img class="avatar" src="images/avatars/user-04.jpg" alt="" width="50" height="50">
+                                                </div>
+        
+                                                <div class="comment__content">
+        
+                                                    <div class="comment__info">
+                                                        <div class="comment__author">John Doe</div>
+        
+                                                        <div class="comment__meta">
+                                                            <div class="comment__time">july 11, 2019</div>
+                                                            <div class="comment__reply">
+                                                                <a class="comment-reply-link" href="#0">Reply</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+        
+                                                    <div class="comment__text">
+                                                    <p>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est
+                                                    etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
+                                                    </div>
+        
+                                                </div>
+        
+                                            </li>
+        
+                                        </ul>
+        
+                                    </li>
+        
+                                </ul>
+        
+                            </li> <!-- end comment level 1 -->
+         {% endcomment %}
+                            <!--Comment with replies 2 and 3 levels deep-->
+
+
+
+
+                            <!--<li class="depth-1 comment">
+        
+                                <div class="comment__avatar">
+                                    <img class="avatar" src="images/avatars/user-02.jpg" alt="" width="50" height="50">
+                                </div>
+        
+                                <div class="comment__content">
+        
+                                    <div class="comment__info">
+                                        <div class="comment__author">Shikamaru Nara</div>
+        
+                                        <div class="comment__meta">
+                                            <div class="comment__time">July 11, 2019</div>
+                                            <div class="comment__reply">
+                                                <a class="comment-reply-link" href="#0">Reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="comment__text">
+                                    <p>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
+                                    </div>
+        
+                                </div>
+        
+                            </li>-->  <!-- end comment level 1 -->
+        
+                        </ol>
+                        <!-- END commentlist -->
+                        
+                    </div> <!-- end comments -->
+
+                    <div class="comment-respond">
+
+                        <!-- START respond -->
+                        <div id="respond">
+                            {% if new_comment %}
+                            <div class="alert alert-success" role="alert">
+                                Your comment is awaiting moderation
+                            </div>
+
+                            {% else %}
+                            <h3>Add Comment <span>Your email address will not be published</span></h3>
+                            {% load crispy_forms_tags %}
+                            <form name="contactForm" id="contactForm" method="post" action="" autocomplete="off">
+                                {{ comment_form | crispy }}
+                                {% csrf_token %}
+                                <fieldset>        
+                                    <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large h-full-width" value="Add Comment" type="submit">
+                                </fieldset> 
+                            </form> <!-- end form -->
+                            {% endif %}
+                        </div>
+                        <!-- END respond-->
+            
+                    </div> <!-- end comment-respond -->
+            
+                </div> <!-- end comments-wrap -->
+
+            </div> <!-- end main -->
+
+
+            <div id="sidebar" class="s-content__sidebar large-4 column">
+
+               {% comment %} <div class="widget widget--search">
+                  <h3 class="h6">Search</h3> 
+                  <form action="#0">
+                     <input type="text" value="Search here..." onblur="if(this.value == '') { this.value = 'Search here...'; }" onfocus="if (this.value == 'Search here...') { this.value = ''; }" class="text-search">
+                     <input type="submit" value="" class="submit-search">
+                  </form>
+               </div> {% endcomment %}
+
+               <div class="widget widget--categories">
+                   <h3 class="h6">Categories.</h3> 
+                   {% include 'base/categories.html' %}
+                   
+                </div>
+
+                <div class="widget widget_text group">
+                    <h3 class="h6">Widget Text.</h3>
+
+                    <p>
+                    Lorem ipsum Ullamco commodo laboris sit dolore commodo aliquip incididunt fugiat esse dolor 
+                    aute fugiat minim eiusmod do velit labore fugiat officia ad sit culpa labore in consectetur 
+                    sint cillum sint consectetur voluptate adipisicing Duis irure magna ut sit amet reprehenderit.
+                    </p>
+                </div>
+
+                <div class="widget widget_tags">
+                    <h3 class="h6">Post Tags.</h3>
+
+                    <div class="tagcloud group">
+                        <a href="#0">Corporate</a>
+                        <a href="#0">Onepage</a>
+                        <a href="#0">Agency</a>
+                        <a href="#0">Multipurpose</a>
+                        <a href="#0">Blog</a>
+                        <a href="#0">Landing Page</a>
+                        <a href="#0">Resume</a>
+                    </div>
+                </div>
+
+                <div class="widget widget_popular">
+                    <h3 class="h6">Popular Post.</h3>
+
+                    <ul class="link-list">
+                        <li><a href="#0">Sint cillum consectetur voluptate.</a></li>
+                        <li><a href="#0">Lorem ipsum Ullamco commodo.</a></li>
+                        <li><a href="#0">Fugiat minim eiusmod do.</a></li>
+                    </ul>
+                </div>
+               
+            </div> <!-- end sidebar -->
+
+        </div> <!-- end row -->
+
+    </div> <!-- end content-wrap -->
+
+
+    <!-- Footer
+    ================================================== -->
+    <footer class="s-footer">
+
+        <div class="row_other s-footer__top">
+            <div class="column">
+                <ul class="s-footer__social">
+                    <li><a href="#0"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                    <li><a href="#0"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#0"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+                    <li><a href="#0"><i class="fab fa-vimeo-v" aria-hidden="true"></i></a></li>
+                    <li><a href="#0"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#0"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                    <li><a href="#0"><i class="fab fa-skype" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div> <!-- end footer__top -->
+
+        <div class="row_other s-footer__bottom">
+
+            <div class="large-6 tab-full column s-footer__info">
+                <h3 class="h6">About Keep It Simple</h3>
+
+                <p>
+                Lorem ipsum Ullamco commodo laboris sit dolore commodo aliquip incididunt fugiat esse dolor 
+                aute fugiat minim eiusmod do velit labore fugiat officia ad sit culpa labore in consectetur 
+                sint cillum sint consectetur voluptate adipisicing Duis
+                </p>
+
+                <p>
+                Lorem ipsum Sed nulla deserunt voluptate elit occaecat culpa cupidatat sit irure sint 
+                sint incididunt cupidatat esse in Ut sed commodo tempor consequat culpa fugiat incididunt.
+                </p>
+            </div>
+
+            <div class="large-6 tab-full column">
+                <div class="row_other">
+                    <div class="large-8 tab-full column">
+
+                        <h3 class="h6">Photostream</h3>
+                        
+                        <ul class="photostream group">
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'blog/images/thumb.jpg' %}"></a></li>
+                            {% comment %} <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li>
+                            <li><a href="#0"><img alt="thumbnail" src="{% static 'base/blog/images/thumb.jpg' %}"></a></li> {% endcomment %}
+                        </ul>
+        
+                    </div>
+        
+                    <div class="large-4 tab-full column">
+                        <h3  class="h6">Navigate</h3>
+        
+                        <ul class="s-footer__list s-footer-list--nav group">
+                            <li><a href="#0">Home</a></li>
+                            <li><a href="#0">Blog</a></li>
+                            <li><a href="#0">Demo</a></li>
+                            <li><a href="#0">Archives</a></li>
+                            <li><a href="#0">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ss-copyright">
+                <span>© Copyright Keep It Simple 2019</span> 
+                <span>Design by <a href="https://www.styleshout.com/">StyleShout</a></span>
+            </div>
+
+        </div> <!-- end footer__bottom -->
+
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0l8 9h-6v15h-4v-15h-6z"/></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+
+   </footer> <!-- end Footer-->
+
+
+   <!-- Java Script
+    ================================================== -->
+    <script src="{% static 'blog/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/main.js' %}"></script>
+
+    {% endblock content %}
