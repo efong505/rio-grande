@@ -19,7 +19,7 @@ class Profile(models.Model):
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/', default='profiles/user-default.png')
     created = models.DateTimeField(auto_now_add=True)
     #uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    id = models.CharField(default=uuid.uuid4, unique=True, primary_key=True, editable=False, max_length=36)
+    id = models.CharField(default=uuid.uuid4, primary_key=True, editable=False, max_length=36)
     #id = models.UUIDField(default=uuid.uuid4, unique=True,
      #                     editable=False)
     def __str__(self):
