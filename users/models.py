@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-
+import uuid
 
 
 
@@ -17,7 +17,7 @@ class Profile(models.Model):
     bio = models.TextField(blank=True, null=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/', default='profiles/user-default.png')
     created = models.DateTimeField(auto_now_add=True)
-  
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4,unique=True)
     def __str__(self):
         return str(self.username)
     
