@@ -1,7 +1,6 @@
 from distutils.text_file import TextFile
 from statistics import mode
 from unicodedata import category
-#import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
@@ -103,10 +102,7 @@ class About(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
-    #id = models.CharField(default=uuid.uuid4, 
-     #                     primary_key=False, editable=False, max_length=36)
-    #id = models.UUIDField(primary_key=True,default=uuid.uuid4, unique=True)
-                          
+    
 
     def __str__(self):
         return self.name
