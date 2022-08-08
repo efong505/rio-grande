@@ -1,6 +1,6 @@
 from re import T
 from tokenize import blank_re
-import uuid
+#import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
