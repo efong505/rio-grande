@@ -1,7 +1,7 @@
 from distutils.text_file import TextFile
 from statistics import mode
 from unicodedata import category
-import uuid
+#import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
