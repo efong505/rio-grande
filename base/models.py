@@ -92,7 +92,7 @@ class About(models.Model):
     story = models.TextField()
     image = models.ImageField(null=True, blank=True,
                                        default="default.jpg")
-    UUID = models.UUIDField(primary_key=True,default=uuid.uuid4,unique=True)
+    
     class Meta:
         verbose_name_plural = "About Options"
     def __str__(self):
