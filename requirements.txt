@@ -1,6 +1,7 @@
 Django==4.0.5
 django-heroku
 gunicorn
+psycopg2
 arrow==1.2.2
 asgiref==3.5.2
 astunparse==1.6.3
