@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 from django.forms import CharField, DateTimeField
-
+import uuid
 
 # from base.views import Category
 
@@ -42,7 +42,7 @@ class Post(models.Model):
     #thumbnail = models.ImageField()
     # categories = models.ManyToManyField(Category, null=True)
     featured = models.BooleanField()
-    
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4,unique=True)
     class Meta:
         ordering = ['-created_on']
     def __str__(self):
@@ -57,7 +57,7 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4,unique=True)
     class Meta:
         ordering = ['created_on']
     def __str__(self):
@@ -92,7 +92,7 @@ class About(models.Model):
     story = models.TextField()
     image = models.ImageField(null=True, blank=True,
                                        default="default.jpg")
-    
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4,unique=True)
     class Meta:
         verbose_name_plural = "About Options"
     def __str__(self):
