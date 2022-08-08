@@ -18,7 +18,7 @@ class Profile(models.Model):
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/', default='profiles/user-default.png')
     created = models.DateTimeField(auto_now_add=True)
     #id=models.UUIDField(primary_key=True,default=uuid.uuid4,unique=True)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid_temp = models.UUIDField(default=uuid.uuid4, unique=True)
     def __str__(self):
         return str(self.username)
     
