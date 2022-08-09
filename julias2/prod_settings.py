@@ -5,7 +5,7 @@ from .settings import *
 import django_heroku
 
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', SECRET_KEY)
 # adjust to the URL of your Heroku app
 ALLOWED_HOSTS = ['*']
